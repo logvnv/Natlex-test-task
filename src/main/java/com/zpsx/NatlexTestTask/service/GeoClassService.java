@@ -1,11 +1,11 @@
 package com.zpsx.NatlexTestTask.service;
 
 import com.zpsx.NatlexTestTask.domain.GeoClass;
+import com.zpsx.NatlexTestTask.exception.GeoClassAlreadyExistsException;
+import com.zpsx.NatlexTestTask.exception.GeoClassDoesNotExistException;
 import com.zpsx.NatlexTestTask.repository.GeoClassRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -17,22 +17,19 @@ public class GeoClassService {
 
     public GeoClass createGeoClass(GeoClass geoClass){
         if (geoClassRepo.findById(geoClass.getCode()).isPresent())
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    String.format("Geological class with code \"%s\" already exits.", geoClass.getCode()));
+            throw new GeoClassAlreadyExistsException(geoClass.getCode());
         geoClassRepo.save(geoClass);
         return geoClass;
     }
 
     public GeoClass readGeoClass(String code){
         return geoClassRepo.findById(code)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                        String.format("Geological class with code \"%s\" does not exit.", code)));
+                .orElseThrow(() -> new GeoClassDoesNotExistException(code));
     }
 
     public GeoClass updateGeoClass(GeoClass geoClass){
         if (!geoClassRepo.findById(geoClass.getCode()).isPresent())
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    String.format("Geological class with code \"%s\" does not exit.", geoClass.getCode()));
+            throw new GeoClassDoesNotExistException(geoClass.getCode());
 
         geoClassRepo.save(geoClass);
         return geoClass;
@@ -40,8 +37,7 @@ public class GeoClassService {
 
     public GeoClass deleteGeoClass(String code){
         GeoClass geoClass = geoClassRepo.findById(code)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                        String.format("Geological class with code \"%s\" does not exit.", code)));
+                .orElseThrow(() -> new GeoClassDoesNotExistException(code));
 
         geoClassRepo.delete(geoClass);
         return geoClass;

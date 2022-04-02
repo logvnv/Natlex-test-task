@@ -47,7 +47,7 @@ public class GeoClassControllerTest {
                 .andExpect(status().isBadRequest())
                 .andReturn().getResponse().getErrorMessage();
 
-        Assertions.assertThat(result).isEqualTo("Geological class with code \"GC11\" already exits.");
+        Assertions.assertThat(result).isEqualTo("Geological class with code \"GC11\" already exists.");
     }
 
     @Test
@@ -66,7 +66,7 @@ public class GeoClassControllerTest {
                 .andExpect(status().isBadRequest())
                 .andReturn().getResponse().getErrorMessage();
 
-        Assertions.assertThat(result).isEqualTo("Geological class with code \"GC12\" does not exit.");
+        Assertions.assertThat(result).isEqualTo("Geological class with code \"GC12\" does not exist.");
     }
 
     @Test
@@ -93,7 +93,7 @@ public class GeoClassControllerTest {
                 .andExpect(status().isBadRequest())
                 .andReturn().getResponse().getErrorMessage();
 
-        Assertions.assertThat(result).isEqualTo("Geological class with code \"GC12\" does not exit.");
+        Assertions.assertThat(result).isEqualTo("Geological class with code \"GC12\" does not exist.");
     }
 
     @Test
@@ -112,7 +112,7 @@ public class GeoClassControllerTest {
                 .andExpect(status().isBadRequest())
                 .andReturn().getResponse().getErrorMessage();
 
-        Assertions.assertThat(result).isEqualTo("Geological class with code \"GC12\" does not exit.");
+        Assertions.assertThat(result).isEqualTo("Geological class with code \"GC12\" does not exist.");
     }
 
     @Test

@@ -48,7 +48,7 @@ public class SectionControllerTest {
                 .andExpect(status().isBadRequest())
                 .andReturn().getResponse().getErrorMessage();
 
-        Assertions.assertThat(result).isEqualTo("Geological class with code \"GC12\" does not exit.");
+        Assertions.assertThat(result).isEqualTo("Geological class with code \"GC12\" does not exist.");
     }
 
     @Test
@@ -112,7 +112,7 @@ public class SectionControllerTest {
                 .andExpect(status().isBadRequest())
                 .andReturn().getResponse().getErrorMessage();
 
-        Assertions.assertThat(result).isEqualTo("Geological class with code \"GC12\" does not exit.");
+        Assertions.assertThat(result).isEqualTo("Geological class with code \"GC12\" does not exist.");
     }
 
     @Test
