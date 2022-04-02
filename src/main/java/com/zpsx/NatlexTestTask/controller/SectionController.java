@@ -7,13 +7,12 @@ import com.zpsx.NatlexTestTask.service.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path="api/sections", produces=MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path="api/sections")
 public class SectionController {
 
     @Autowired
@@ -22,32 +21,33 @@ public class SectionController {
     SectionService sectionService;
 
     @GetMapping("by-code")
-    public ResponseEntity<List<Section>> readSectionsByGeoCode(@RequestParam String code){
-        return new ResponseEntity<>(sectionService.readSectionsByGeoCode(code), HttpStatus.OK);
+    public List<Section> readSectionsByGeoCode(@RequestParam String code){
+        return sectionService.readSectionsByGeoCode(code);
     }
 
     @GetMapping
-    public ResponseEntity<List<Section>> readAllSections(){
-        return new ResponseEntity<>(sectionRepo.findAll(), HttpStatus.OK);
+    public List<Section> readAllSections(){
+        return sectionRepo.findAll();
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Section> createSection(@RequestBody SectionRequestBody sectionRequestBody){
-        return new ResponseEntity<>(sectionService.createSection(sectionRequestBody), HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+    public Section createSection(@RequestBody SectionRequestBody sectionRequestBody){
+        return sectionService.createSection(sectionRequestBody);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Section> readSection(@PathVariable long id){
-        return new ResponseEntity<>(sectionService.readSection(id), HttpStatus.OK);
+    public Section readSection(@PathVariable long id){
+        return sectionService.readSection(id);
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Section> updateSection(@RequestBody SectionRequestBody sectionRequestBody){
-        return new ResponseEntity<>(sectionService.updateSection(sectionRequestBody), HttpStatus.CREATED);
+    public Section updateSection(@RequestBody SectionRequestBody sectionRequestBody){
+        return sectionService.updateSection(sectionRequestBody);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Section> deleteSection(@PathVariable long id){
-        return new ResponseEntity<>(sectionService.deleteSection(id), HttpStatus.OK);
+    public Section deleteSection(@PathVariable long id){
+        return sectionService.deleteSection(id);
     }
 }

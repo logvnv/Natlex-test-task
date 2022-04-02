@@ -79,7 +79,7 @@ public class SectionControllerTest {
                                   "\"name\":\"Section 11\"," +
                                   "\"geoCodes\":[\"GC11\"]}")
                 )
-                .andExpect(status().isCreated())
+                .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
         Assertions.assertThat(result).isEqualTo("{\"id\":1," +
