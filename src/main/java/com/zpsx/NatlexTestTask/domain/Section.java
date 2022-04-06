@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -13,8 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 @JsonPropertyOrder({ "id", "name", "geoClasses" })
 public class Section {
-    @Id @GeneratedValue private long Id;
-    private String name;
+    @Id @GeneratedValue private long id;
+    @NotBlank private String name;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private List<GeoClass> geoClasses;
 
