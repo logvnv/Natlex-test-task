@@ -14,7 +14,7 @@ public class SectionPostRequestBody {
     @Size(max = 255, message = "Section name length must be below 255 characters.")
     private String name;
 
-    private List<@Positive(message = "Geological class ID must be a positive number.") Long> geoClasses;
+    private final List<@Positive(message = "Geological class ID must be a positive number.") Long> geoClasses;
 
     SectionPostRequestBody(){
         this.geoClasses = new ArrayList<>();

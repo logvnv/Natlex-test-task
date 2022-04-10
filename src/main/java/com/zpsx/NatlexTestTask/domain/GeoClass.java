@@ -22,4 +22,9 @@ public class GeoClass {
         this.code = postBody.getCode();
         this.name = postBody.getName();
     }
+
+    public GeoClass(String code, String name){
+        this.code = code;
+        this.name = name;
+    }
 }

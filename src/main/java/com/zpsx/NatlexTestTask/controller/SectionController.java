@@ -54,7 +54,8 @@ public class SectionController {
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Section updateSection(@RequestBody SectionPutRequestBody sectionPutRequestBody, BindingResult bindingResult){
+    public Section updateSection(@RequestBody @Valid SectionPutRequestBody sectionPutRequestBody,
+                                 BindingResult bindingResult){
         if (bindingResult.hasErrors())
             throw new RequestBodyValidationException(bindingResult.getAllErrors());
         return sectionService.updateSection(sectionPutRequestBody);

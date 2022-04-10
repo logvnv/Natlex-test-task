@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,6 +20,11 @@ public class Section {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<GeoClass> geoClasses;
+
+    public Section(String name){
+        this.name = name;
+        this.geoClasses = new ArrayList<>();
+    }
 
     public Section(String name, List<GeoClass> geoClasses){
         this.name = name;

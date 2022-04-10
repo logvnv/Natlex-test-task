@@ -113,6 +113,18 @@ public class SectionControllerTest {
     }
 
     @Test
+    public void createSectionDuplicateGeoClassTest() throws Exception {
+        String result = mockMvc.perform(post("/api/sections")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"name\":\"Section 11\"," +
+                                  "\"geoClasses\": [1, 1]}"))
+                .andExpect(status().isBadRequest())
+                .andReturn().getResponse().getErrorMessage();
+
+        Assertions.assertThat(result).isEqualTo("Multiple occurrence of geological class with id '1'.");
+    }
+
+    @Test
     public void createSectionValTest() throws Exception {
         String result = mockMvc.perform(post("/api/sections")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -334,6 +346,32 @@ public class SectionControllerTest {
                 .andReturn().getResponse().getErrorMessage();
 
         Assertions.assertThat(result).isEqualTo("Geological class with id '3' does not exist.");
+    }
+
+    @Test
+    public void updateSectionValidationTest() throws Exception {
+        String result = mockMvc.perform(put("/api/sections")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"id\":-1," +
+                                  "\"name\":\"Section 1\"," +
+                                  "\"geoClasses\": [3]}"))
+                .andExpect(status().isBadRequest())
+                .andReturn().getResponse().getErrorMessage();
+
+        Assertions.assertThat(result).isEqualTo("Section id must be a positive number.");
+    }
+
+    @Test
+    public void updateSectionDuplicateGeoClassTest() throws Exception {
+        String result = mockMvc.perform(put("/api/sections")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"id\":1," +
+                                  "\"name\":\"Section 11\"," +
+                                  "\"geoClasses\": [1, 1]}"))
+                .andExpect(status().isBadRequest())
+                .andReturn().getResponse().getErrorMessage();
+
+        Assertions.assertThat(result).isEqualTo("Multiple occurrence of geological class with id '1'.");
     }
 
     @Test

@@ -4,6 +4,7 @@ import com.zpsx.NatlexTestTask.domain.GeoClass;
 import com.zpsx.NatlexTestTask.domain.Section;
 import com.zpsx.NatlexTestTask.domain.dto.SectionPostRequestBody;
 import com.zpsx.NatlexTestTask.domain.dto.SectionPutRequestBody;
+import com.zpsx.NatlexTestTask.domain.exception.DuplicateGeoClassException;
 import com.zpsx.NatlexTestTask.domain.exception.GeoClassDoesNotExistException;
 import com.zpsx.NatlexTestTask.domain.exception.SectionAlreadyExistsException;
 import com.zpsx.NatlexTestTask.domain.exception.SectionDoesNotExistException;
@@ -42,6 +43,8 @@ public class SectionService {
         for(long id: sectionPostRequestBody.getGeoClasses()){
             GeoClass geoClass = geoClassRepo.findById(id)
                     .orElseThrow(() -> new GeoClassDoesNotExistException(id));
+            if (geoClasses.contains(geoClass))
+                throw new DuplicateGeoClassException(geoClass);
             geoClasses.add(geoClass);
         }
 
@@ -70,7 +73,8 @@ public class SectionService {
         for(long id: sectionPutRequestBody.getGeoClasses()){
             GeoClass geoClass = geoClassRepo.findById(id)
                     .orElseThrow(() -> new GeoClassDoesNotExistException(id));
-
+            if (geoClasses.contains(geoClass))
+                throw new DuplicateGeoClassException(geoClass);
             geoClasses.add(geoClass);
         }
 
