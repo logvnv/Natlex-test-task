@@ -1,3 +1,6 @@
+### API доступен по адресу:
+https://natlex-test-task.herokuapp.com
+
 # Test Task for backend developer
 1) Add REST CRUD API for Sections and GeologicalClasses. Each Section has structure:
    <pre>
