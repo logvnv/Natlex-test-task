@@ -5,7 +5,7 @@ import com.zpsx.NatlexTestTask.domain.dto.SectionPostRequestBody;
 import com.zpsx.NatlexTestTask.domain.dto.SectionPutRequestBody;
 import com.zpsx.NatlexTestTask.domain.exception.RequestBodyValidationException;
 import com.zpsx.NatlexTestTask.repository.SectionRepo;
-import com.zpsx.NatlexTestTask.service.SectionService;
+import com.zpsx.NatlexTestTask.service.ISectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,7 +22,7 @@ public class SectionController {
     @Autowired
     SectionRepo sectionRepo;
     @Autowired
-    SectionService sectionService;
+    ISectionService sectionService;
 
     @GetMapping("by-code")
     public List<Section> readSectionsByGeoCode(@RequestParam String code){
@@ -31,7 +31,7 @@ public class SectionController {
 
     @GetMapping("by-name")
     public Section readSectionByName(@RequestParam String name){
-        return sectionService.readSectionsByName(name);
+        return sectionService.readSectionByName(name);
     }
 
     @GetMapping

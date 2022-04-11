@@ -2,7 +2,7 @@ package com.zpsx.NatlexTestTask.controller;
 
 import com.zpsx.NatlexTestTask.domain.dto.UserPostRequestBody;
 import com.zpsx.NatlexTestTask.domain.exception.RequestBodyValidationException;
-import com.zpsx.NatlexTestTask.service.UserService;
+import com.zpsx.NatlexTestTask.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,7 +16,7 @@ import javax.validation.Valid;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    IUserService userService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

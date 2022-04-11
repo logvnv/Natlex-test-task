@@ -1,4 +1,4 @@
-package com.zpsx.NatlexTestTask.service;
+package com.zpsx.NatlexTestTask.service.impl;
 
 import com.zpsx.NatlexTestTask.domain.GeoClass;
 import com.zpsx.NatlexTestTask.domain.Section;
@@ -10,30 +10,33 @@ import com.zpsx.NatlexTestTask.domain.exception.SectionAlreadyExistsException;
 import com.zpsx.NatlexTestTask.domain.exception.SectionDoesNotExistException;
 import com.zpsx.NatlexTestTask.repository.GeoClassRepo;
 import com.zpsx.NatlexTestTask.repository.SectionRepo;
+import com.zpsx.NatlexTestTask.service.ISectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class SectionService {
+public class SectionService implements ISectionService {
 
     @Autowired
     SectionRepo sectionRepo;
     @Autowired
     GeoClassRepo geoClassRepo;
 
+    @Override
     public List<Section> readSectionsByGeoCode(String code){
         return sectionRepo.findAllByGeoCode(code);
     }
 
-    public Section readSectionsByName(String name) {
+    @Override
+    public Section readSectionByName(String name) {
         return sectionRepo.findByName(name)
                 .orElseThrow(() -> new SectionDoesNotExistException(name));
     }
 
+    @Override
     public Section createSection(SectionPostRequestBody sectionPostRequestBody){
         sectionRepo.findByName(sectionPostRequestBody.getName())
                 .ifPresent(section -> {
@@ -54,12 +57,14 @@ public class SectionService {
         return section;
     }
 
+    @Override
     public Section readSection(long id){
         return sectionRepo.findById(id)
                 .orElseThrow(() -> new SectionDoesNotExistException(id));
     }
 
-    public Section updateSection(@RequestBody SectionPutRequestBody sectionPutRequestBody){
+    @Override
+    public Section updateSection(SectionPutRequestBody sectionPutRequestBody){
         Section section = sectionRepo.findById(sectionPutRequestBody.getId())
                 .orElseThrow(() -> new SectionDoesNotExistException(sectionPutRequestBody.getId()));
 
@@ -86,6 +91,7 @@ public class SectionService {
         return section;
     }
 
+    @Override
     public Section deleteSection(long id){
         Section section = sectionRepo.findById(id)
                 .orElseThrow(() -> new SectionDoesNotExistException(id));

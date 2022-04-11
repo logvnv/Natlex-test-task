@@ -3,7 +3,7 @@ package com.zpsx.NatlexTestTask.controller;
 import com.zpsx.NatlexTestTask.domain.ImportExportJob;
 import com.zpsx.NatlexTestTask.domain.dto.ExportResource;
 import com.zpsx.NatlexTestTask.domain.enumeration.ImportExportJobType;
-import com.zpsx.NatlexTestTask.service.ImportExportService;
+import com.zpsx.NatlexTestTask.service.IImportExportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ImportExportController {
 
     @Autowired
-    ImportExportService ieService;
+    IImportExportService ieService;
 
     @PostMapping(path = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public long importFile(@RequestParam("file") MultipartFile file){

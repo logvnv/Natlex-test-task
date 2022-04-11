@@ -4,7 +4,7 @@ import com.zpsx.NatlexTestTask.domain.GeoClass;
 import com.zpsx.NatlexTestTask.domain.dto.GeoClassPostRequestBody;
 import com.zpsx.NatlexTestTask.domain.dto.GeoClassPutRequestBody;
 import com.zpsx.NatlexTestTask.domain.exception.RequestBodyValidationException;
-import com.zpsx.NatlexTestTask.service.GeoClassService;
+import com.zpsx.NatlexTestTask.service.IGeoClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,11 +19,11 @@ import java.util.List;
 public class GeoClassController {
 
     @Autowired
-    GeoClassService geoClassService;
+    IGeoClassService geoClassService;
 
     @GetMapping
     public List<GeoClass> readAllGeoClass(){
-        return geoClassService.readAllGeoClass();
+        return geoClassService.readAllGeoClasses();
     }
 
     @GetMapping("by-code-and-name")

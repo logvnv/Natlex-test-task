@@ -1,4 +1,4 @@
-package com.zpsx.NatlexTestTask.service;
+package com.zpsx.NatlexTestTask.service.impl;
 
 import com.zpsx.NatlexTestTask.domain.ImportExportJob;
 import com.zpsx.NatlexTestTask.domain.dto.ExportResource;
@@ -9,6 +9,7 @@ import com.zpsx.NatlexTestTask.domain.exception.FailedToProcessFileException;
 import com.zpsx.NatlexTestTask.domain.exception.JobIsNotDoneException;
 import com.zpsx.NatlexTestTask.domain.exception.JobNotFoundException;
 import com.zpsx.NatlexTestTask.repository.ImportExportJobRepo;
+import com.zpsx.NatlexTestTask.service.IImportExportService;
 import com.zpsx.NatlexTestTask.service.helper.ImportExportHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,7 +24,7 @@ import java.nio.file.Files;
 import java.util.Objects;
 
 @Service
-public class ImportExportService {
+public class ImportExportService implements IImportExportService {
 
     @Value("${export-dir}")
     private String exportDir;
@@ -33,6 +34,7 @@ public class ImportExportService {
     @Autowired
     ImportExportHelper importExportHelper;
 
+    @Override
     public long importFile(MultipartFile file){
         if (!Objects.equals(file.getContentType(),
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
@@ -52,6 +54,7 @@ public class ImportExportService {
         return importJob.getId();
     }
 
+    @Override
     public long exportFile() {
         ImportExportJob importJob = new ImportExportJob(ImportExportJobType.EXPORT);
         importExportJobRepo.save(importJob);
@@ -61,11 +64,13 @@ public class ImportExportService {
         return importJob.getId();
     }
 
+    @Override
     public ImportExportJob getJob(long id, ImportExportJobType type) {
         return importExportJobRepo.findByIdAndType(id, type)
                 .orElseThrow(() -> new JobNotFoundException(id, type));
     }
 
+    @Override
     public ExportResource getExportResource(Long id) {
         ImportExportJob exportJob = importExportJobRepo.findByIdAndType(id, ImportExportJobType.EXPORT)
                 .orElseThrow(() -> new JobNotFoundException(id, ImportExportJobType.EXPORT));
