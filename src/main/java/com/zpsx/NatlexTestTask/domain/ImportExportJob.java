@@ -23,7 +23,7 @@ public class ImportExportJob {
     private ImportExportJobStatus status;
     private String message;
 
-    @JsonIgnore private static SimpleDateFormat dateFormat = new SimpleDateFormat("yy_MM_dd_hh_mm");
+    @JsonIgnore private static SimpleDateFormat dateFormat = new SimpleDateFormat("yy_MM_dd_HH_mm");
     @JsonIgnore public String getFileName() {
         return dateFormat.format(startedAt) + "__"  + id.toString() + ".xlsx";
     }

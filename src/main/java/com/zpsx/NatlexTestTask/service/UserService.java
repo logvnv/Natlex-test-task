@@ -1,6 +1,7 @@
 package com.zpsx.NatlexTestTask.service;
 
 import com.zpsx.NatlexTestTask.domain.User;
+import com.zpsx.NatlexTestTask.domain.dto.UserPostRequestBody;
 import com.zpsx.NatlexTestTask.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,14 +22,15 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepo.findByUsername(username)
-                .orElseThrow(()-> new UsernameNotFoundException(String.format("User \"%s\" not found.", username)));
+                .orElseThrow(()-> new UsernameNotFoundException(String.format("User '%s' not found.", username)));
     }
 
-    public void addUser(User user) {
-        if(userRepo.findByUsername(user.getUsername()).isPresent())
+    public void addUser(UserPostRequestBody userPostRequestBody) {
+        if(userRepo.findByUsername(userPostRequestBody.getUsername()).isPresent())
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    String.format("User \"%s\" already exists.", user.getUsername()));
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepo.save(user);
+                    String.format("User '%s' already exists.", userPostRequestBody.getUsername()));
+
+        userRepo.save(new User(userPostRequestBody.getUsername(),
+                passwordEncoder.encode(userPostRequestBody.getPassword())));
     }
 }

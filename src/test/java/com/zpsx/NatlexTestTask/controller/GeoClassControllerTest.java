@@ -1,4 +1,4 @@
-package com.zpsx.NatlexTestTask;
+package com.zpsx.NatlexTestTask.controller;
 
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.Assertions;

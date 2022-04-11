@@ -11,6 +11,7 @@ import com.zpsx.NatlexTestTask.domain.exception.JobNotFoundException;
 import com.zpsx.NatlexTestTask.repository.ImportExportJobRepo;
 import com.zpsx.NatlexTestTask.service.helper.ImportExportHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,9 +25,11 @@ import java.util.Objects;
 @Service
 public class ImportExportService {
 
+    @Value("${export-dir}")
+    private String exportDir;
+
     @Autowired
     ImportExportJobRepo importExportJobRepo;
-
     @Autowired
     ImportExportHelper importExportHelper;
 
@@ -73,7 +76,7 @@ public class ImportExportService {
             InputStreamResource resource = new InputStreamResource(
                     new ByteArrayInputStream(
                             Files.readAllBytes(
-                                    new File("export/" + exportJob.getFileName()).toPath())));
+                                    new File(exportDir + "/" + exportJob.getFileName()).toPath())));
 
             return new ExportResource(resource, exportJob.getFileName());
         }

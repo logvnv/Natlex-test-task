@@ -6,7 +6,9 @@ target/
 .DS_Store
 
 ### Files created during execution ###
-export/
+**/export/*
+### This file is required for tests ###
+!**/export/01_01_01_00_00__7.xlsx
 
 ### STS ###
 .apt_generated

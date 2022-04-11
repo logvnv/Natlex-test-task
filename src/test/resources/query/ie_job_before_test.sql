@@ -15,6 +15,7 @@ insert into import_export_job(id, type, status, message, started_at) values
 (3, 0, 2, 'import in progress', '0001-01-01 00:00:00.00'),
 (4, 1, 0, 'export done', '0001-01-01 00:00:00.00'),
 (5, 1, 1, 'export error', '0001-01-01 00:00:00.00'),
-(6, 1, 2, 'export in progress', '0001-01-01 00:00:00.00');
+(6, 1, 2, 'export in progress', '0001-01-01 00:00:00.00'),
+(7, 1, 0, 'export done', '0001-01-01 00:00:00.00');
 
 alter sequence hibernate_sequence restart with 10;

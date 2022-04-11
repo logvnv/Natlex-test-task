@@ -1,4 +1,4 @@
-package com.zpsx.NatlexTestTask;
+package com.zpsx.NatlexTestTask.controller;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -180,6 +180,12 @@ public class ImportExportControllerTest {
                 .andReturn().getResponse().getErrorMessage();
 
         Assertions.assertThat(result).isEqualTo("EXPORT job with id '1' does not exist.");
+    }
+
+    @Test
+    public void getFileTest() throws Exception {
+        mockMvc.perform(get("/api/export/{id}/file", 7))
+                .andExpect(status().isOk());
     }
 
     @Test

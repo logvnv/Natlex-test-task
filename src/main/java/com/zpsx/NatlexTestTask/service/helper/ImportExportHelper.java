@@ -8,10 +8,10 @@ import com.zpsx.NatlexTestTask.domain.exception.TableParseException;
 import com.zpsx.NatlexTestTask.repository.GeoClassRepo;
 import com.zpsx.NatlexTestTask.repository.ImportExportJobRepo;
 import com.zpsx.NatlexTestTask.repository.SectionRepo;
-import lombok.AllArgsConstructor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -21,11 +21,16 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
 
 @Component
-@AllArgsConstructor(onConstructor = @__(@Lazy))
 public class ImportExportHelper {
+
+    @Value("${export-dir}")
+    private String exportDir;
 
     @Autowired
     private ImportExportJobRepo importExportJobRepo;
@@ -34,7 +39,7 @@ public class ImportExportHelper {
     @Autowired
     private GeoClassRepo geoClassRepo;
     @Autowired @Lazy
-    private final ImportExportHelper self;
+    private ImportExportHelper self;
 
     @Async
     public void importFile(InputStream fileInputStream, ImportExportJob importJob) {
@@ -151,7 +156,7 @@ public class ImportExportHelper {
                 row.createCell(2 * (i + 1)).setCellValue(String.format("Class %d code", i+1));
             }
 
-            File file = new File("export/" + exportJob.getFileName());
+            File file = new File(exportDir + "/" + exportJob.getFileName());
             assert file.getParentFile().exists() || file.getParentFile().mkdirs();
             assert file.createNewFile();
             FileOutputStream outputStream = new FileOutputStream(file);

@@ -16,6 +16,10 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @TestPropertySource("/application-test.properties")
@@ -34,6 +38,9 @@ public class ImportExportHelperTest {
     @Sql(value = {"/query/section_before_test.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(value = {"/query/section_after_test.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void createFileDoneTest(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yy_MM_dd_hh_mm__ss");
+        when(ioJob.getFileName()).thenReturn("test" + dateFormat.format(new Date()) + ".xlsx");
+
         importExportHelper.createFile(ioJob);
 
         Mockito.verify(ioJob, Mockito.times(1)).setStatus(ImportExportJobStatus.DONE);
