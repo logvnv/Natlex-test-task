@@ -4,7 +4,6 @@ import com.zpsx.NatlexTestTask.domain.Section;
 import com.zpsx.NatlexTestTask.domain.dto.SectionPostRequestBody;
 import com.zpsx.NatlexTestTask.domain.dto.SectionPutRequestBody;
 import com.zpsx.NatlexTestTask.domain.exception.RequestBodyValidationException;
-import com.zpsx.NatlexTestTask.repository.SectionRepo;
 import com.zpsx.NatlexTestTask.service.ISectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,8 +19,6 @@ import java.util.List;
 public class SectionController {
 
     @Autowired
-    SectionRepo sectionRepo;
-    @Autowired
     ISectionService sectionService;
 
     @GetMapping("by-code")
@@ -36,7 +33,7 @@ public class SectionController {
 
     @GetMapping
     public List<Section> readAllSections(){
-        return sectionRepo.findAll();
+        return sectionService.readAll();
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

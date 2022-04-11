@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface ISectionService {
     List<Section> readSectionsByGeoCode(String code);
+    List<Section> readAll();
     Section readSectionByName(String name);
     Section createSection(SectionPostRequestBody sectionPostRequestBody);
     Section readSection(long id);

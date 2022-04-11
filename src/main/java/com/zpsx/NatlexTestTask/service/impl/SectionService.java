@@ -31,6 +31,11 @@ public class SectionService implements ISectionService {
     }
 
     @Override
+    public List<Section> readAll() {
+        return sectionRepo.findAll();
+    }
+
+    @Override
     public Section readSectionByName(String name) {
         return sectionRepo.findByName(name)
                 .orElseThrow(() -> new SectionDoesNotExistException(name));
